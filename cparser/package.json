@@ -1,0 +1,7 @@
+{
+  "name": "cparser",
+  "version": "1.0.0",
+  "description": "The C Parser",
+  "author": "",
+  "license": "ISC"
+}
