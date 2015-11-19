@@ -1,7 +1,8 @@
+'use strict';
 var fs = require('fs');
 
 module.exports = {
-	getFilenameExt: function(filename) {
+	getFilenameExt: function getFilenameExt(filename) {
 		if (!filename || (filename.length === 0)) {
 			return filename;
 		}
@@ -14,7 +15,7 @@ module.exports = {
 		}
 	},
 
-	getFilenameNoExt: function(filename) {
+	getFilenameNoExt: function getFilenameNoExt(filename) {
 		if (!filename || (filename.length === 0)) {
 			return filename;
 		}
@@ -33,7 +34,7 @@ module.exports = {
 	 * @param idx
 	 * @param val
 	 */
-	stringInsert: function(str, idx, val) {
+	stringInsert: function stringInsert(str, idx, val) {
 		return str.substring(0, idx) + val + str.substring(idx);
 	},
 
@@ -42,7 +43,7 @@ module.exports = {
 	 * @param required
 	 * @param found
 	 */
-	setComplement: function(required, found) {
+	setComplement: function setComplement(required, found) {
 		var hash = {};
 		for (var i = 0; i < found.length; i++) {
 			hash[found[i]] = true;
@@ -59,12 +60,11 @@ module.exports = {
 		return results;
 	},
 
-	isDirectory: function(filePath) {
+	isDirectory: function isDirectory(filePath) {
 		try {
 			var stat = fs.statSync(filePath);
 			return stat.isDirectory();
-		} catch (ex) {
-		}
+		} catch (ex) {}
 		return false;
 	},
 
