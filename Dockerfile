@@ -2,7 +2,7 @@ FROM particle/buildpack-base:0.1.1
 
 # Node installation from https://github.com/mhart/alpine-node/blob/master/Dockerfile
 ENV NODE_VERSION=v0.10.44 CFLAGS="-D__USE_MISC" NPM_VERSION=2
-ENV CONFIG_FLAGS="--fully-static" DEL_PKGS="libgcc libstdc++" RM_DIRS=/usr/include
+ENV DEL_PKGS="libgcc libstdc++" RM_DIRS=/usr/include
 RUN apk add --no-cache curl make gcc g++ binutils-gold python linux-headers paxctl libgcc libstdc++ gnupg && \
   gpg --keyserver pool.sks-keyservers.net --recv-keys 9554F04D7259F04124DE6B476D5A82AC7E37093B && \
   gpg --keyserver pool.sks-keyservers.net --recv-keys 94AE36675C464D64BAFA68DD7434390BDBE9B9C5 && \
