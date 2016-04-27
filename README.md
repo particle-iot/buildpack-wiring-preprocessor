@@ -1,15 +1,10 @@
 # Buildpack for Arduino based projects
 
-[![Build Status](https://magnum.travis-ci.com/spark/buildpack-wiring-preprocessor.svg?token=M4rP8W5QPGszZyem6TGE&branch=master)](https://magnum.travis-ci.com/spark/buildpack-wiring-preprocessor)
+[![Build Status](https://travis-ci.org/spark/buildpack-wiring-preprocessor.svg?branch=master)](https://travis-ci.org/spark/buildpack-wiring-preprocessor)
 
-| |
-|---|
-|  [Particle firmware](https://github.com/spark/firmware-buildpack-builder)  |
-| [HAL](https://github.com/spark/buildpack-hal) / [Legacy](https://github.com/spark/buildpack-0.3.x)   |
-| **Wiring preprocessor (you are here)** |
-| [Base](https://github.com/spark/buildpack-base) |
 
-This overlay buildpack provides a `preprocess-ino` function which preprocesses `.ino` files into `.cpp`.
+This buildpack preprocesses `.ino` files into `.cpp`.
+It inherits [base buildpack](https://github.com/spark/buildpack-base).
 
 This behavior can be disabled adding `#pragma SPARK_NO_PREPROCESSOR` to Arduino file.
 
@@ -26,9 +21,13 @@ $ docker build -t particle/buildpack-$BUILDPACK_IMAGE .
 
 ## Running
 
-This buildpack is designed to be inherited using `FROM` clause in `Dockerfile`.
-Then before compilation run:
+This buildpack requires two volumes to be mounted: `/input` and `/output`. To preprocess code simply run the container:
 
 ```bash
-$ preprocess-ino DIR_WITH_INO_FILES
+$ docker run --rm \
+  -v ~/tmp/input:/input \
+  -v ~/tmp/output:/output \
+  particle/buildpack-wiring-preprocessor
 ```
+
+Where `~/tmp/input` is location of Wiring code and `~/tmp/output` is where preprocessed code will be stored.
