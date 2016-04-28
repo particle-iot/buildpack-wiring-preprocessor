@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:0.1.1
+FROM particle/buildpack-base:0.3.1
 
 # Node installation from https://github.com/mhart/alpine-node/blob/master/Dockerfile
 ENV NODE_VERSION=v0.10.44 CFLAGS="-D__USE_MISC" NPM_VERSION=2
@@ -34,6 +34,8 @@ RUN apk add --no-cache curl make gcc g++ binutils-gold python linux-headers paxc
 
 COPY cparser /cparser
 COPY bin /bin
+RUN rm -rf /test
+ADD test /test
 
 WORKDIR /cparser
 RUN npm install
