@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:0.3.1
+FROM particle/buildpack-base:0.3.4
 
 # Node installation from https://github.com/mhart/alpine-node/blob/master/Dockerfile
 ENV NODE_VERSION=v0.10.44 CFLAGS="-D__USE_MISC" NPM_VERSION=2
