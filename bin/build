@@ -1,2 +1,2 @@
-node /cparser/main.js $WORKSPACE_DIR
+/bin/run-in-nvm node /cparser/main.js $WORKSPACE_DIR
 cp -r $WORKSPACE_DIR/. $OUTPUT_DIR
