@@ -1,4 +1,4 @@
-FROM particle/buildpack-base:0.3.5
+FROM particle/buildpack-base:0.3.6
 
 ENV NODE_VERSION=v0.10.44 NVM_DIR="/root/.nvm"
 RUN apt-get update -q && apt-get install -qy build-essential libssl-dev man-db \
