@@ -1,6 +1,6 @@
 # Buildpack for Arduino based projects
 
-[![Build Status](https://travis-ci.org/spark/buildpack-wiring-preprocessor.svg?branch=master)](https://travis-ci.org/spark/buildpack-wiring-preprocessor)
+[![Build Status](https://travis-ci.org/spark/buildpack-wiring-preprocessor.svg?branch=master)](https://travis-ci.org/spark/buildpack-wiring-preprocessor) [![](https://imagelayers.io/badge/particle/buildpack-wiring-preprocessor:latest.svg)](https://imagelayers.io/?images=particle/buildpack-wiring-preprocessor:latest 'Get your own badge on imagelayers.io')
 
 
 This buildpack preprocesses `.ino` files into `.cpp`.
