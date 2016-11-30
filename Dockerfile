@@ -1,4 +1,4 @@
-FROM particle/buildpack-base-node:0.1.1-node_v0.10.44
+FROM particle/buildpack-base-node:0.1.2-node_v0.10.44
 
 COPY cparser /cparser
 COPY bin /bin

@@ -16,11 +16,17 @@
 
 var fs = require('fs');
 var path = require('path');
+var glob = require('glob');
 var cparser = require('./processor');
 var utilities = require('./utilities');
 
 var userFolder = process.argv[2];
-var files = fs.readdirSync(userFolder);
+
+var files = glob.sync('**/*.{ino,pde}', {
+	cwd: userFolder,
+	ignore: 'lib/*'
+});
+
 for (var i = 0; i < files.length; i++) {
 	var filename = files[i];
 	var fullFilename = path.join(userFolder, filename);
