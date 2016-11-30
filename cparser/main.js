@@ -23,7 +23,8 @@ var utilities = require('./utilities');
 var userFolder = process.argv[2];
 
 var files = glob.sync('**/*.{ino,pde}', {
-	cwd: userFolder
+	cwd: userFolder,
+	ignore: 'lib/*'
 });
 
 for (var i = 0; i < files.length; i++) {

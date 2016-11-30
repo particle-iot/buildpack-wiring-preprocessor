@@ -5,7 +5,7 @@
   cp /test/data/input.ino /input
   # Run buildpack
   /bin/run
-  # Compare expeted output
+  # Compare expected output
   diff /output/input.cpp /test/data/output.cpp
   # Assert
   [ "$?" -eq 0 ]
