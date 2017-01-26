@@ -21,3 +21,14 @@
   # Assert
   [ "$?" -eq 0 ]
 }
+
+@test "Process functions with custom types" {
+  # Copy test data to input
+  cp /test/fixtures/types/input.ino /input
+  # Run buildpack
+  /bin/run
+  # Compare expected output
+  diff /output/input.cpp /test/fixtures/types/output.cpp
+  # Assert
+  [ "$?" -eq 0 ]
+}

@@ -1,7 +1,7 @@
 
 #include "application.h"
 void loop();
-#line 1 
+#line 1
 bool var1 = false;
 void loop() {
  if(var1) {

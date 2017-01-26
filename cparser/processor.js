@@ -77,7 +77,7 @@ module.exports = that = {
 			var addedContent = "\n"
 				+ missingIncludes.join("\n") + "\n"
 				+ missingFuncs.join("\n") + "\n"
-				+ '#line ' + linesBeforeInjection + " \n";
+				+ '#line ' + linesBeforeInjection + "\n";
 			fileBuffer = utilities.stringInsert(
 				fileBuffer,
 				insertIdx,

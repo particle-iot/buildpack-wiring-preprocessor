@@ -69,6 +69,13 @@ module.exports = that = {
 		}
 	},
 
+	types: {
+		declarations: function declarations(str) {
+			var typeRegex = new RegExp(/\b(class|struct|enum)\b\s+(\w+)/gm);
+			return that.matchAll(typeRegex, str);
+		}
+	},
+
 	describe: {
 		parseGitTag: function parseGitTag(tag) {
 			var prefix = 'spark_';
@@ -160,10 +167,15 @@ module.exports = that = {
 		var found = that.functions.declarations(contents);
 		found = that.flattenRegexResults(found);
 
+		// All the user defined types
+		var types = that.types.declarations(contents);
+		types = that.flattenRegexResults(types, 2);
+
 		// All the functions we have
 		var defined = that.functions.definitions(contents);
 		defined = that.flattenRegexResults(defined);
 		defined = that.removeSpecialCaseDefinitions(defined);
+		defined = that.removeDefinitionsWithCustomTypes(defined, types);
 		for (var i = 0; i < defined.length; i++) {
 			defined[i] = defined[i] + ';';
 		}
@@ -176,10 +188,11 @@ module.exports = that = {
 	 * just the strings please.
 	 * @param results
 	 */
-	flattenRegexResults: function flattenRegexResults(results) {
+	flattenRegexResults: function flattenRegexResults(results, group) {
+		group = group || 0;
 		if (results) {
 			for (var i = 0; i < results.length; i++) {
-				results[i] = results[i][0];
+				results[i] = results[i][group];
 			}
 		}
 		return results;
@@ -191,7 +204,7 @@ module.exports = that = {
 	removeSpecialCaseDefinitions: function removeSpecialCaseDefinitions(defined) {
 		var wellDefined = [];
 		var specialCases = [
-			new RegExp(/else\s+if\s*\(/) /* else if(foo) */
+			new RegExp(/\belse\b\s+\bif\b/) /* else if(foo) */
 		];
 		next_definition:
 		for (var i = 0; i < defined.length; i++) {
@@ -204,6 +217,29 @@ module.exports = that = {
 			wellDefined.push(defined[i]);
 		}
 		return wellDefined;
+	},
+
+	/**
+	 * remove definitions with custom classes, structs and enums as parameters
+	 */
+	removeDefinitionsWithCustomTypes: function removeDefinitionsWithCustomTypes(defined, types) {
+		var i;
+		var builtinDefined = [];
+		var customTypes = [];
+		for (i = 0; i < types.length; i++) {
+			customTypes[i] = new RegExp("\\b" + types[i] + "\\b");
+		}
+		next_definition:
+		for (i = 0; i < defined.length; i++) {
+			// remove custom types
+			for (var j = 0; j < customTypes.length; j++) {
+				if (customTypes[j].test(defined[i])) {
+					continue next_definition;
+				}
+			}
+			builtinDefined.push(defined[i]);
+		}
+		return builtinDefined;
 	},
 
 	getMissingIncludes: function getMissingIncludes(contents, required) {

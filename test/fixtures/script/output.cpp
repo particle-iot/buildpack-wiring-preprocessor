@@ -6,7 +6,7 @@ void sendCommandSHT(int command, int dataPin, int clockPin);
 void waitForResultSHT(int dataPin);
 int getData16SHT(int dataPin, int clockPin);
 void skipCrcSHT(int dataPin, int clockPin);
-#line 1 
+#line 1
 int temperatureCommand  = B00000011;  // command used to read temperature
 int humidityCommand = B00000101;  // command used to read humidity
 
