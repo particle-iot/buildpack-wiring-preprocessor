@@ -2,11 +2,22 @@
 
 @test "Process file" {
   # Copy test data to input
-  cp /test/data/input.ino /input
+  cp /test/fixtures/script/input.ino /input
   # Run buildpack
   /bin/run
   # Compare expected output
-  diff /output/input.cpp /test/data/output.cpp
+  diff /output/input.cpp /test/fixtures/script/output.cpp
+  # Assert
+  [ "$?" -eq 0 ]
+}
+
+@test "Process single if else" {
+  # Copy test data to input
+  cp /test/fixtures/ifelse/input.ino /input
+  # Run buildpack
+  /bin/run
+  # Compare expected output
+  diff /output/input.cpp /test/fixtures/ifelse/output.cpp
   # Assert
   [ "$?" -eq 0 ]
 }

@@ -163,6 +163,7 @@ module.exports = that = {
 		// All the functions we have
 		var defined = that.functions.definitions(contents);
 		defined = that.flattenRegexResults(defined);
+		defined = that.removeSpecialCaseDefinitions(defined);
 		for (var i = 0; i < defined.length; i++) {
 			defined[i] = defined[i] + ';';
 		}
@@ -182,6 +183,27 @@ module.exports = that = {
 			}
 		}
 		return results;
+	},
+
+	/**
+	 * remove things that look like definitions but are not
+	 */
+	removeSpecialCaseDefinitions: function removeSpecialCaseDefinitions(defined) {
+		var wellDefined = [];
+		var specialCases = [
+			new RegExp(/else\s+if\s*\(/) /* else if(foo) */
+		];
+		next_definition:
+		for (var i = 0; i < defined.length; i++) {
+			// remove special cases
+			for (var j = 0; j < specialCases.length; j++) {
+				if (specialCases[j].test(defined[i])) {
+					continue next_definition;
+				}
+			}
+			wellDefined.push(defined[i]);
+		}
+		return wellDefined;
 	},
 
 	getMissingIncludes: function getMissingIncludes(contents, required) {

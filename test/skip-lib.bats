@@ -3,7 +3,7 @@
 @test "Process file in a directory" {
   mkdir /input/lib
   # Copy test data to input
-  cp /test/data/input.ino /input/lib
+  cp /test/fixtures/script/input.ino /input/lib
   # Run buildpack
   /bin/run
   # Assert
