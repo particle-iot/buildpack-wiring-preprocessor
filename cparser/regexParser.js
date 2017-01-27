@@ -43,7 +43,7 @@ module.exports = that = {
 	matchAll: function matchAll(expr, str) {
 		var m, matches = [];
 
-		while ((m = expr.exec(str)) != null) {
+		while ((m = expr.exec(str)) !== null) {
 			matches.push(m);
 		}
 		return matches;
@@ -187,6 +187,7 @@ module.exports = that = {
 	/**
 	 * just the strings please.
 	 * @param results
+	 * @param group The capture group to return or the entire match
 	 */
 	flattenRegexResults: function flattenRegexResults(results, group) {
 		group = group || 0;
@@ -300,8 +301,8 @@ module.exports = that = {
 		var pat = new RegExp(nonStatement.join(''), 'mgi');
 		var lastMatch = 0;
 
-		var match = pat.exec(contents);
-		while (match) {
+		var match;
+		while ((match = pat.exec(contents)) !== null) {
 			if (match.index !== lastMatch) {
 				break;
 			}

@@ -32,3 +32,15 @@
   # Assert
   [ "$?" -eq 0 ]
 }
+
+
+@test "Process file with other includes" {
+  # Copy test data to input
+  cp /test/fixtures/include/input.ino /input
+  # Run buildpack
+  /bin/run
+  # Compare expected output
+  diff /output/input.cpp /test/fixtures/include/output.cpp
+  # Assert
+  [ "$?" -eq 0 ]
+}
