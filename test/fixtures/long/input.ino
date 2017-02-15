@@ -446,7 +446,7 @@ int triggerRelay(String command){
         delay(1800000);
         relayController.turnOnRelay(relayNumber);
         delay(3600000);
-        
+
        relayController.turnOffRelay(relayNumber);
         delay(1800000);
         relayController.turnOnRelay(relayNumber);
@@ -4388,4 +4388,3 @@ int triggerRelay(String command){
     }
     return 0;
 }
-

@@ -5,7 +5,7 @@
 #include "NCD4Relay/NCD4Relay.h"
 
 
-#include "application.h"
+#include "Particle.h"
 void setup();
 void loop();
 #line 7
@@ -451,7 +451,7 @@ int triggerRelay(String command){
         delay(1800000);
         relayController.turnOnRelay(relayNumber);
         delay(3600000);
-        
+
        relayController.turnOffRelay(relayNumber);
         delay(1800000);
         relayController.turnOnRelay(relayNumber);
@@ -4393,4 +4393,3 @@ int triggerRelay(String command){
     }
     return 0;
 }
-

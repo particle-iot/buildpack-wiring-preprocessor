@@ -41,8 +41,9 @@ module.exports = that = {
 				return false;
 			}
 
-			if ((fileBuffer.indexOf('#pragma SPARK_NO_PREPROCESSOR') >= 0)
-					|| (ext !== '.ino')) {
+			if ((fileBuffer.indexOf('#pragma SPARK_NO_PREPROCESSOR') >= 0) ||
+				(fileBuffer.indexOf('#pragma PARTICLE_NO_PREPROCESSOR') >= 0) ||
+				(ext !== '.ino')) {
 				console.log('Skipping ' + ext + ' file ');
 				fs.writeFileSync(outputFile, fileBuffer, {flag: 'w'});
 				return true;
@@ -50,7 +51,7 @@ module.exports = that = {
 
 			var insertIdx = regexParser.getFirstStatement(fileBuffer);
 
-			var includeStr = '#include "application.h"';
+			var includeStr = '#include "Particle.h"';
 			var appDotHInclude = fileBuffer.indexOf(includeStr);
 			if (appDotHInclude > insertIdx) {
 				// Don't inject function declr's before application.h...
@@ -64,18 +65,13 @@ module.exports = that = {
 				0,
 				insertIdx
 			).split('\n').length;
-			var noComments = regexParser.removeComments(fileBuffer);
-			var missingIncludes = regexParser.getMissingIncludes(
-				noComments,
-				['"application.h"']
-			);
 
 			var cleanText = regexParser.stripText(fileBuffer);
 			var missingFuncs = regexParser.getMissingDeclarations(cleanText);
 
 
 			var addedContent = "\n"
-				+ missingIncludes.join("\n") + "\n"
+				+ includeStr + "\n"
 				+ missingFuncs.join("\n") + "\n"
 				+ '#line ' + linesBeforeInjection + "\n";
 			fileBuffer = utilities.stringInsert(

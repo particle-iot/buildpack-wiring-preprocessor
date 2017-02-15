@@ -132,23 +132,6 @@ module.exports = that = {
 		return contents.replace(cruft, '');
 	},
 
-	removeComments: function removeComments(contents) {
-		// http://stackoverflow.com/questions/462843/improving-fixing-a-regex-for-c-style-block-comments
-		// var multiline = new RegExp("/\\*.*?\\*/", 'mgi');
-		// var singleline = new RegExp("//.[^\n]*", 'gi');
-
-		// This one should catch all comments not inside quotes
-		// (?=(?:[^"']|["|'][^"']*")*$)(/\\*.*?\\*/)+
-
-		// Prefer single line comments
-		var multiline = new RegExp("(?=(?:[^\"']|[\"|'][^\"']*\")*$)((//.[^\n]*)|(/\\*[^*]*(?:\\*(?!/)[^*]*)*\\*/))", 'mgi');
-
-		// Prefer multi-line comments
-		//var multiline = new RegExp("(?=(?:[^\"']|[\"|'][^\"']*\")*$)((/\\*[^*]*(?:\\*(?!/)[^*]*)*\\*/)|(//.[^\n]*))", 'mgi');
-
-		return contents.replace(multiline, ' ');
-	},
-
 	extractIncludes: function extractIncludes(contents) {
 		var includesRegex = new RegExp("^(#include).+$", 'mi');
 
@@ -241,23 +224,6 @@ module.exports = that = {
 			builtinDefined.push(defined[i]);
 		}
 		return builtinDefined;
-	},
-
-	getMissingIncludes: function getMissingIncludes(contents, required) {
-		// var cleanText = that.removeComments(contents);
-
-		// TODO: be smarter about matching whitespace inside include statements, etc.
-
-		// Prepend the '#include' part...
-		for (var i = 0; i < required.length; i++) {
-			var line = required[i];
-			if (line.indexOf('#include') < 0) {
-				required[i] = '#include ' + line;
-			}
-		}
-
-		var found = that.flattenRegexResults(that.includes.findAll(contents));
-		return utilities.setComplement(required, found);
 	},
 
 	/**
