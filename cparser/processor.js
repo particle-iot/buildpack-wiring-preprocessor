@@ -51,7 +51,7 @@ module.exports = that = {
 
 			var insertIdx = regexParser.getFirstStatement(fileBuffer);
 
-			var includeStr = '#include "Particle.h"';
+			var includeStr = '#include "application.h"';
 			var appDotHInclude = fileBuffer.indexOf(includeStr);
 			if (appDotHInclude > insertIdx) {
 				// Don't inject function declr's before application.h...
