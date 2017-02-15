@@ -44,3 +44,14 @@
   # Assert
   [ "$?" -eq 0 ]
 }
+
+@test "Process long file" {
+  # Copy test data to input
+  cp /test/fixtures/long/input.ino /input
+  # Run buildpack
+  /bin/run
+  # Compare expected output
+  diff /output/input.cpp /test/fixtures/long/output.cpp
+  # Assert
+  [ "$?" -eq 0 ]
+}
