@@ -2,7 +2,7 @@
 
 process_file () {
   # Copy test data to input
-  cp /test/fixtures/$1/input.ino /input
+  cp /test/fixtures/$1/input.* /input
   # Run buildpack
   /bin/run
   # Compare expected output
@@ -29,4 +29,8 @@ process_file () {
 
 @test "Process long file" {
   process_file long
+}
+
+@test "Process PDE file" {
+  process_file pde
 }

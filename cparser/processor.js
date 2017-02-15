@@ -43,7 +43,7 @@ module.exports = that = {
 
 			if ((fileBuffer.indexOf('#pragma SPARK_NO_PREPROCESSOR') >= 0) ||
 				(fileBuffer.indexOf('#pragma PARTICLE_NO_PREPROCESSOR') >= 0) ||
-				(ext !== '.ino')) {
+				(['.ino', '.pde'].indexOf(ext) < 0)) {
 				console.log('Skipping ' + ext + ' file ');
 				fs.writeFileSync(outputFile, fileBuffer, {flag: 'w'});
 				return true;

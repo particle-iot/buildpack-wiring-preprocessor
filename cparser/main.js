@@ -32,7 +32,8 @@ for (var i = 0; i < files.length; i++) {
 	var fullFilename = path.join(userFolder, filename);
 
 	var outFilename = fullFilename;
-	if (utilities.getFilenameExt(filename).toLowerCase() == '.ino') {
+	var ext = utilities.getFilenameExt(filename).toLowerCase();
+	if (['.ino', '.pde'].indexOf(ext) >= 0) {
 		outFilename = utilities.getFilenameNoExt(outFilename) + '.cpp';
 	}
 
