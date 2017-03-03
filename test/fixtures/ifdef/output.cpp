@@ -1,14 +1,10 @@
-#ifdef ARDUINO
-#error "ARDUINO is defined"
-#else
-#error "ARDUINO is NOT defined"
-#endif
-
 
 #include "application.h"
 void setup();
-#line 7
-int foo = 42;
+#line 1
+#ifdef ARDUINO
+// do something
+#endif
+
 void setup() {
-  Particle.variable("foo", foo);
 }

@@ -53,6 +53,10 @@ module.exports = that = {
 
 			var includeStr = '#include "application.h"';
 			var appDotHInclude = fileBuffer.indexOf(includeStr);
+			if (appDotHInclude === -1) {
+				includeStr = '#include "Particle.h"';
+				appDotHInclude = fileBuffer.indexOf(includeStr);
+			}
 			if (appDotHInclude > insertIdx) {
 				// Don't inject function declr's before application.h...
 				insertIdx = fileBuffer.indexOf(
@@ -71,9 +75,9 @@ module.exports = that = {
 
 
 			var addedContent = "\n"
-				+ includeStr + "\n"
-				+ missingFuncs.join("\n") + "\n"
-				+ '#line ' + linesBeforeInjection + "\n";
+				+ '#include "application.h"\n'
+				+ missingFuncs.join("\n") + '\n'
+				+ '#line ' + linesBeforeInjection + '\n';
 			fileBuffer = utilities.stringInsert(
 				fileBuffer,
 				insertIdx,

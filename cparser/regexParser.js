@@ -260,8 +260,8 @@ module.exports = that = {
 			// Comments
 			"|(/\\*[^*]*(?:\\*(?!/)[^*]*)*\\*/)|(//.*?$)",
 
-			// Pre-processor
-			"|(#(?:\\\\\\n|.)*)"
+			// Include statements
+			"|(#include.+$)"
 		];
 
 		var pat = new RegExp(nonStatement.join(''), 'mgi');
