@@ -31,3 +31,12 @@ $ docker run --rm \
 ```
 
 Where `~/tmp/input` is location of Wiring code and `~/tmp/output` is where preprocessed code will be stored.
+
+## Tests
+
+```
+$ docker build -t particle/buildpack-wiring-preprocessor .
+$ docker run --rm particle/buildpack-wiring-preprocessor /bin/run-tests
+```
+
+See `.travis.yml` for the most up to date instructions.

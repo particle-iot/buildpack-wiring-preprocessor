@@ -31,6 +31,10 @@ process_file () {
   process_file long
 }
 
+@test "Process file with ifdefs at the top" {
+  process_file ifdef
+}
+
 @test "Process PDE file" {
   process_file pde
 }
