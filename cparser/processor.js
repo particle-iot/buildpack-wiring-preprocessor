@@ -41,8 +41,16 @@ module.exports = that = {
 				return false;
 			}
 
-			if ((fileBuffer.indexOf('#pragma SPARK_NO_PREPROCESSOR') >= 0) ||
-				(fileBuffer.indexOf('#pragma PARTICLE_NO_PREPROCESSOR') >= 0) ||
+			var noPreprocessorMatch = fileBuffer.match('#pragma (SPARK_NO_PREPROCESSOR|PARTICLE_NO_PREPROCESSOR)');
+			if (noPreprocessorMatch) {
+				// Comment out the fake pragma to avoid GCC warning
+				fileBuffer = utilities.stringInsert(
+					fileBuffer,
+					noPreprocessorMatch.index,
+					'//'
+				);
+			}
+			if (noPreprocessorMatch ||
 				(['.ino', '.pde'].indexOf(ext) < 0)) {
 				console.log('Skipping ' + ext + ' file ');
 				fs.writeFileSync(outputFile, fileBuffer, {flag: 'w'});

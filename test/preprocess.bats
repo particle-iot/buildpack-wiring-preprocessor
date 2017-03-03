@@ -35,6 +35,10 @@ process_file () {
   process_file ifdef
 }
 
+@test "Does not preprocess files with the magic pragma" {
+  process_file ifdef
+}
+
 @test "Process PDE file" {
   process_file pde
 }
