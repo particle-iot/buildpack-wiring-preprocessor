@@ -76,46 +76,6 @@ module.exports = that = {
 		}
 	},
 
-	describe: {
-		parseGitTag: function parseGitTag(tag) {
-			var prefix = 'spark_';
-			if (!tag || (tag.indexOf(prefix) !== 0 )) {
-				//empty or doesn't start with spark_ ?  not our tag!
-				return null;
-			}
-
-			try {
-				//chop off the leading prefix.
-				//spark_0-45-g48a6ef7
-				//gives us: 0-45-g48a6ef7
-				tag = tag.substring(prefix.length);
-				var chunks = tag.split('-');
-
-				// ['0', '45', 'g48a6ef7' ]
-				if (chunks.length >= 2) {
-
-					var result = [
-						parseInt(chunks[0]),
-						parseInt(chunks[1])
-					];
-
-					if (!isNaN(result[0]) && !isNaN(result[1])) {
-						return result;
-					}
-				}
-			} catch (ex) {
-				console.error('Error parsing tag - not a number ', tag);
-			}
-
-			return null;
-		}
-	},
-
-	removePreprocessorDirectives: function removePreprocessorDirectives(contents) {
-		var directives = new RegExp("(#(?:\\\\\\n|.)*)", 'gi'); // Notice no 'm' here
-		return contents.replace(directives, ' ');
-	},
-
 	/**
 	 * Strip out anything the function definition code doesn't deal with well.
 	 * Essentially anything that couldn't possibly contain a function def.
@@ -130,19 +90,6 @@ module.exports = that = {
 			, 'mgi');
 
 		return contents.replace(cruft, '');
-	},
-
-	extractIncludes: function extractIncludes(contents) {
-		var includesRegex = new RegExp("^(#include).+$", 'mi');
-
-		// Look for lines that start with #include
-		// #include "awesome.h"
-		// #include <unstdio.h>
-		// etc.
-
-		var results = includesRegex.exec(contents);
-		console.log('Found ', results.length, ' includes ');
-		return results;
 	},
 
 	getMissingDeclarations: function getMissingDeclarations(contents) {
@@ -224,29 +171,6 @@ module.exports = that = {
 			builtinDefined.push(defined[i]);
 		}
 		return builtinDefined;
-	},
-
-	/**
-	 *
-	 * @param contents
-	 */
-	getIdxAfterIncludes: function getIdxAfterIncludes(contents) {
-		var allIncludes = that.includes.findAll(contents);
-		if (allIncludes && (allIncludes.length > 0)) {
-			var last = allIncludes[allIncludes.length - 1];
-			return last.index + last[0].length;
-		}
-
-		return 0;
-	},
-
-	getIdxBeforeIncludes: function getIdxBeforeIncludes(contents) {
-		var allIncludes = that.includes.findAll(contents);
-		if (allIncludes && (allIncludes.length > 0)) {
-			return allIncludes[0].index;
-		}
-
-		return 0;
 	},
 
 	// Return the line number of the first statement in the code
