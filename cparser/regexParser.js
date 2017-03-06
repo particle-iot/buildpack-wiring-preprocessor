@@ -92,6 +92,30 @@ module.exports = that = {
 		return contents.replace(cruft, '');
 	},
 
+	getNoPreprocessor: function getMagicPragma(contents) {
+		var noPreprocessorMatch = contents.match(
+			'#pragma (SPARK_NO_PREPROCESSOR|PARTICLE_NO_PREPROCESSOR)'
+		);
+
+		if (noPreprocessorMatch) {
+			return noPreprocessorMatch.index;
+		} else {
+			return -1;
+		}
+	},
+
+	getApplicationInclude: function getApplicationInclude(contents) {
+		var applicationIncludeMatch = contents.match(
+			'#include [<"](application.h|Particle.h|Arduino.h)[>"]'
+		);
+
+		if (applicationIncludeMatch) {
+			return applicationIncludeMatch.index;
+		} else {
+			return -1;
+		}
+	},
+
 	getMissingDeclarations: function getMissingDeclarations(contents) {
 		// All the ones that don't need extra declarations
 		var found = that.functions.declarations(contents);

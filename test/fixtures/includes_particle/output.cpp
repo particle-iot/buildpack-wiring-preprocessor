@@ -3,8 +3,6 @@
 #define RATE 10
 
 #include "Particle.h"
-
-#include "application.h"
 void setup();
 void loop();
 #line 6

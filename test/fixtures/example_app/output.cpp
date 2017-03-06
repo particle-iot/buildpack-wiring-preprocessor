@@ -1,5 +1,5 @@
-
 #include "application.h"
+#line 1
 void setup();
 void loop();
 void sendCommandSHT(int command, int dataPin, int clockPin);

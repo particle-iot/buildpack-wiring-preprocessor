@@ -41,56 +41,60 @@ module.exports = that = {
 				return false;
 			}
 
-			var noPreprocessorMatch = fileBuffer.match('#pragma (SPARK_NO_PREPROCESSOR|PARTICLE_NO_PREPROCESSOR)');
-			if (noPreprocessorMatch) {
+			// Skip files with PARTICLE_NO_PREPROCESSOR
+			var noPreprocessorIdx = regexParser.getNoPreprocessor(fileBuffer);
+			if (noPreprocessorIdx >= 0) {
 				// Comment out the fake pragma to avoid GCC warning
 				fileBuffer = utilities.stringInsert(
 					fileBuffer,
-					noPreprocessorMatch.index,
-					'//'
+					noPreprocessorIdx,
+					'// '
 				);
 			}
-			if (noPreprocessorMatch ||
+
+			if (noPreprocessorIdx >= 0 ||
 				(['.ino', '.pde'].indexOf(ext) < 0)) {
 				console.log('Skipping ' + ext + ' file ');
 				fs.writeFileSync(outputFile, fileBuffer, {flag: 'w'});
 				return true;
 			}
 
-			var insertIdx = regexParser.getFirstStatement(fileBuffer);
+			// Check if application.h is already included
+			var appIncludeIdx = regexParser.getApplicationInclude(fileBuffer);
 
-			var includeStr = '#include "application.h"';
-			var appDotHInclude = fileBuffer.indexOf(includeStr);
-			if (appDotHInclude === -1) {
-				includeStr = '#include "Particle.h"';
-				appDotHInclude = fileBuffer.indexOf(includeStr);
-			}
-			if (appDotHInclude > insertIdx) {
-				// Don't inject function declr's before application.h...
-				insertIdx = fileBuffer.indexOf(
-					"\n",
-					appDotHInclude + includeStr.length
-				) + 1;
+			// Add function prototypes after other includes
+			var prototypesIdx = regexParser.getFirstStatement(fileBuffer);
+
+			// If prototype position would be before existing application.h move it to later
+			if (appIncludeIdx > prototypesIdx) {
+				prototypesIdx = fileBuffer.indexOf('\n', appIncludeIdx) + 1;
 			}
 
+			// Add a #line preprocessor instruction to sync the errors with the original code
 			var linesBeforeInjection = fileBuffer.substring(
 				0,
-				insertIdx
+				prototypesIdx
 			).split('\n').length;
 
+			// Add function declarations
 			var cleanText = regexParser.stripText(fileBuffer);
 			var missingFuncs = regexParser.getMissingDeclarations(cleanText);
 
-
-			var addedContent = "\n"
-				+ '#include "application.h"\n'
-				+ missingFuncs.join("\n") + '\n'
+			var prototypesStr = missingFuncs.join('\n') + '\n'
 				+ '#line ' + linesBeforeInjection + '\n';
 			fileBuffer = utilities.stringInsert(
 				fileBuffer,
-				insertIdx,
-				addedContent
+				prototypesIdx,
+				prototypesStr
 			);
+
+			// Add application.h to the top of the file unless it is already included
+			if (appIncludeIdx === -1) {
+				var includeStr = '#include "application.h"\n' +
+					'#line 1\n';
+
+				fileBuffer = includeStr + fileBuffer;
+			}
 
 			fs.writeFileSync(outputFile, fileBuffer, {flag: 'w'});
 			return true;
