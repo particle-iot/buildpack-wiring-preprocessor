@@ -7,7 +7,7 @@
   # Run buildpack
   /bin/run
   # Compare expected output
-  diff /output/src/input.cpp /test/fixtures/example_app/output.cpp
+  diff --unified /output/src/input.cpp /test/fixtures/example_app/output.cpp
   # Assert
   [ "$?" -eq 0 ]
 }

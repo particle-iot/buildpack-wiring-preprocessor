@@ -93,9 +93,11 @@ module.exports = that = {
 	},
 
 	getNoPreprocessor: function getMagicPragma(contents) {
-		var noPreprocessorMatch = contents.match(
-			'#pragma (SPARK_NO_PREPROCESSOR|PARTICLE_NO_PREPROCESSOR)'
+		var re = new RegExp(
+			'^[ \t]*#pragma (SPARK_NO_PREPROCESSOR|PARTICLE_NO_PREPROCESSOR)',
+			'm'
 		);
+		var noPreprocessorMatch = contents.match(re);
 
 		if (noPreprocessorMatch) {
 			return noPreprocessorMatch.index;
@@ -105,9 +107,11 @@ module.exports = that = {
 	},
 
 	getApplicationInclude: function getApplicationInclude(contents) {
-		var applicationIncludeMatch = contents.match(
-			'#include [<"](application.h|Particle.h|Arduino.h)[>"]'
+		var re = new RegExp(
+			'^[ \t]*#include [<"](application.h|Particle.h|Arduino.h)[>"]',
+			'm'
 		);
+		var applicationIncludeMatch = contents.match(re);
 
 		if (applicationIncludeMatch) {
 			return applicationIncludeMatch.index;

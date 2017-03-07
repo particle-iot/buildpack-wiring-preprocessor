@@ -2,7 +2,11 @@
 #define PIN D7
 #define RATE 10
 
-#include "Particle.h"
+// My includes
+  #include "Particle.h"
+void setup();
+void loop();
+#line 7
 
 void setup() {
   pinMode(PIN, OUTPUT);
