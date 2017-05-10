@@ -3,11 +3,11 @@
 @test "Process file in a directory" {
   mkdir /input/src
   # Copy test data to input
-  cp /test/fixtures/example_app/input.ino /input/src
+  cp /test/fixtures/in_directory/input.ino /input/src
   # Run buildpack
   /bin/run
   # Compare expected output
-  diff --unified /output/src/input.cpp /test/fixtures/example_app/output.cpp
+  diff --unified /output/src/input.cpp /test/fixtures/in_directory/output.cpp
   # Assert
   [ "$?" -eq 0 ]
 }

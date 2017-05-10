@@ -81,7 +81,7 @@ module.exports = that = {
 			var missingFuncs = regexParser.getMissingDeclarations(cleanText);
 
 			var prototypesStr = missingFuncs.join('\n') + '\n'
-				+ '#line ' + linesBeforeInjection + '\n';
+				+ '#line ' + linesBeforeInjection + ' "' + inputFile + '"\n';
 			fileBuffer = utilities.stringInsert(
 				fileBuffer,
 				prototypesIdx,
@@ -91,7 +91,7 @@ module.exports = that = {
 			// Add application.h to the top of the file unless it is already included
 			if (appIncludeIdx === -1) {
 				var includeStr = '#include "application.h"\n' +
-					'#line 1\n';
+					'#line 1 "' + inputFile + '"\n';
 
 				fileBuffer = includeStr + fileBuffer;
 			}

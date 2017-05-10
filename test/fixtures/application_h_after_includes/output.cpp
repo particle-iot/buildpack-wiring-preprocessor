@@ -6,7 +6,7 @@
 
 void processGPS(const GPS& gps);
 void loop();
-#line 7
+#line 7 "/workspace/input.ino"
 GPS theGPS;
 
 void processGPS(const GPS& gps)

@@ -1,12 +1,12 @@
 #include "application.h"
-#line 1 "/workspace/input.ino"
+#line 1 "/workspace/src/input.ino"
 void setup();
 void loop();
 void sendCommandSHT(int command, int dataPin, int clockPin);
 void waitForResultSHT(int dataPin);
 int getData16SHT(int dataPin, int clockPin);
 void skipCrcSHT(int dataPin, int clockPin);
-#line 1 "/workspace/input.ino"
+#line 1 "/workspace/src/input.ino"
 int temperatureCommand  = B00000011;  // command used to read temperature
 int humidityCommand = B00000101;  // command used to read humidity
 

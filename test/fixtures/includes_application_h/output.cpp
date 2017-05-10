@@ -5,7 +5,7 @@
 #include "application.h"
 void setup();
 void loop();
-#line 6
+#line 6 "/workspace/input.ino"
 
 void setup() {
   pinMode(PIN, OUTPUT);

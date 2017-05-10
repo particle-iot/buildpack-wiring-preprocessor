@@ -6,7 +6,7 @@
 
 int handler(int foo);
 void setup();
-#line 7
+#line 7 "/workspace/input.ino"
 int handler(int foo) {
     return foo;
 }
