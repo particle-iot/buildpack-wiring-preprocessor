@@ -6,7 +6,7 @@
   #include "Particle.h"
 void setup();
 void loop();
-#line 7
+#line 7 "/workspace/input.ino"
 
 void setup() {
   pinMode(PIN, OUTPUT);

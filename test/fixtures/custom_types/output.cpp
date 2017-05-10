@@ -1,8 +1,8 @@
 #include "application.h"
-#line 1
+#line 1 "/workspace/input.ino"
 void setup();
 void loop();
-#line 1
+#line 1 "/workspace/input.ino"
 class ABC
 {
    int abc;

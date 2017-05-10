@@ -1,5 +1,5 @@
 #include "application.h"
-#line 1
+#line 1 "/workspace/input.ino"
 /* GPS Processing
  */
 #include "GPS.h"
@@ -7,7 +7,7 @@
 
 void processGPS(const GPS& gps);
 void loop();
-#line 6
+#line 6 "/workspace/input.ino"
 GPS theGPS;
 
 void processGPS(const GPS& gps)
