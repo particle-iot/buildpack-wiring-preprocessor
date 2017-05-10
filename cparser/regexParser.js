@@ -73,6 +73,10 @@ module.exports = that = {
 		declarations: function declarations(str) {
 			var typeRegex = new RegExp(/\b(class|struct|enum)\b\s+(\w+)/gm);
 			return that.matchAll(typeRegex, str);
+		},
+		typedefs: function typedefs(str) {
+			var typedefRegex = new RegExp(/\btypedef\s+(struct|enum)\b\s*{[^}]*}\s*(\w+)/gm);
+			return that.matchAll(typedefRegex, str);
 		}
 	},
 
@@ -126,8 +130,12 @@ module.exports = that = {
 		found = that.flattenRegexResults(found);
 
 		// All the user defined types
-		var types = that.types.declarations(contents);
-		types = that.flattenRegexResults(types, 2);
+		var typesDeclarations = that.types.declarations(contents);
+		var typesTypedef = that.types.typedefs(contents);
+		var types = [].concat(
+			that.flattenRegexResults(typesDeclarations, 2),
+			that.flattenRegexResults(typesTypedef, 2)
+		);
 
 		// All the functions we have
 		var defined = that.functions.definitions(contents);

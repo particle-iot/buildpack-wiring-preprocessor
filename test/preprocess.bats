@@ -23,6 +23,10 @@ process_file () {
   process_file custom_types
 }
 
+@test "Process functions with typedef custom types" {
+  process_file typedef_types
+}
+
 @test "Process file with other includes" {
   process_file other_includes
 }
