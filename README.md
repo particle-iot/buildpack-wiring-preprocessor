@@ -4,13 +4,13 @@
 
 
 This buildpack preprocesses `.ino` files into `.cpp`.
-It inherits [base buildpack](https://github.com/spark/buildpack-base).
+It inherits [base buildpack](https://github.com/particle-iot/buildpack-base).
 
 This behavior can be disabled adding `#pragma SPARK_NO_PREPROCESSOR` to Arduino file.
 
 ## Building image
 
-**Before building this image, build or fetch [buildpack-base](https://github.com/spark/buildpack-base).**
+**Before building this image, build or fetch [buildpack-base](https://github.com/particle-iot/buildpack-base).**
 
 ```bash
 $ export BUILDPACK_IMAGE=wiring-preprocessor
