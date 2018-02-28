@@ -13,10 +13,7 @@ This behavior can be disabled adding `#pragma SPARK_NO_PREPROCESSOR` to Arduino 
 **Before building this image, build or fetch [buildpack-base](https://github.com/particle-iot/buildpack-base).**
 
 ```bash
-$ export BUILDPACK_IMAGE=wiring-preprocessor
-$ git clone "git@github.com:spark/buildpack-${BUILDPACK_IMAGE}.git"
-$ cd buildpack-$BUILDPACK_IMAGE
-$ docker build -t particle/buildpack-$BUILDPACK_IMAGE .
+$ docker-compose build
 ```
 
 ## Running
