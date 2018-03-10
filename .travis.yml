@@ -2,7 +2,7 @@ sudo: required
 services:
   - docker
 install:
-  - docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD
+  - docker login --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD
 
 before_script:
   - docker build -t $DOCKER_IMAGE_NAME .
